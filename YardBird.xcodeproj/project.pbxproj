@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B653F07B2443379C004DC3A7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F07A2443379C004DC3A7 /* AppDelegate.m */; };
+		B653F07E2443379C004DC3A7 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F07D2443379C004DC3A7 /* SceneDelegate.m */; };
+		B653F0872443379C004DC3A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B653F0852443379C004DC3A7 /* Main.storyboard */; };
+		B653F089244337A0004DC3A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B653F088244337A0004DC3A7 /* Assets.xcassets */; };
+		B653F08C244337A0004DC3A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B653F08A244337A0004DC3A7 /* LaunchScreen.storyboard */; };
+		B653F08F244337A0004DC3A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F08E244337A0004DC3A7 /* main.m */; };
+		B653F099244337A0004DC3A7 /* YardBirdTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F098244337A0004DC3A7 /* YardBirdTests.m */; };
+		B653F0A4244337A0004DC3A7 /* YardBirdUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F0A3244337A0004DC3A7 /* YardBirdUITests.m */; };
+		B66C399824437846001A0897 /* PeripheralSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B66C399724437846001A0897 /* PeripheralSelectTableViewController.m */; };
+		B66C399B244472A0001A0897 /* PeripheralControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B66C399A244472A0001A0897 /* PeripheralControlViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B653F095244337A0004DC3A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B653F06E2443379C004DC3A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B653F0752443379C004DC3A7;
+			remoteInfo = YardBird;
+		};
+		B653F0A0244337A0004DC3A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B653F06E2443379C004DC3A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B653F0752443379C004DC3A7;
+			remoteInfo = YardBird;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B653F0762443379C004DC3A7 /* YardBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YardBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B653F0792443379C004DC3A7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B653F07A2443379C004DC3A7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B653F07C2443379C004DC3A7 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		B653F07D2443379C004DC3A7 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		B653F0862443379C004DC3A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B653F088244337A0004DC3A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B653F08B244337A0004DC3A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B653F08D244337A0004DC3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B653F08E244337A0004DC3A7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B653F094244337A0004DC3A7 /* YardBirdTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YardBirdTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B653F098244337A0004DC3A7 /* YardBirdTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YardBirdTests.m; sourceTree = "<group>"; };
+		B653F09A244337A0004DC3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B653F09F244337A0004DC3A7 /* YardBirdUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YardBirdUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B653F0A3244337A0004DC3A7 /* YardBirdUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YardBirdUITests.m; sourceTree = "<group>"; };
+		B653F0A5244337A0004DC3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B653F0B1244337F0004DC3A7 /* YardBird.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YardBird.entitlements; sourceTree = "<group>"; };
+		B66C399624437846001A0897 /* PeripheralSelectTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralSelectTableViewController.h; sourceTree = "<group>"; };
+		B66C399724437846001A0897 /* PeripheralSelectTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralSelectTableViewController.m; sourceTree = "<group>"; };
+		B66C3999244472A0001A0897 /* PeripheralControlViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralControlViewController.h; sourceTree = "<group>"; };
+		B66C399A244472A0001A0897 /* PeripheralControlViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralControlViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B653F0732443379C004DC3A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B653F091244337A0004DC3A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B653F09C244337A0004DC3A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B653F06D2443379C004DC3A7 = {
+			isa = PBXGroup;
+			children = (
+				B653F0782443379C004DC3A7 /* YardBird */,
+				B653F097244337A0004DC3A7 /* YardBirdTests */,
+				B653F0A2244337A0004DC3A7 /* YardBirdUITests */,
+				B653F0772443379C004DC3A7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B653F0772443379C004DC3A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B653F0762443379C004DC3A7 /* YardBird.app */,
+				B653F094244337A0004DC3A7 /* YardBirdTests.xctest */,
+				B653F09F244337A0004DC3A7 /* YardBirdUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B653F0782443379C004DC3A7 /* YardBird */ = {
+			isa = PBXGroup;
+			children = (
+				B653F0B1244337F0004DC3A7 /* YardBird.entitlements */,
+				B653F0792443379C004DC3A7 /* AppDelegate.h */,
+				B653F07A2443379C004DC3A7 /* AppDelegate.m */,
+				B653F07C2443379C004DC3A7 /* SceneDelegate.h */,
+				B653F07D2443379C004DC3A7 /* SceneDelegate.m */,
+				B653F0852443379C004DC3A7 /* Main.storyboard */,
+				B653F088244337A0004DC3A7 /* Assets.xcassets */,
+				B653F08A244337A0004DC3A7 /* LaunchScreen.storyboard */,
+				B653F08D244337A0004DC3A7 /* Info.plist */,
+				B653F08E244337A0004DC3A7 /* main.m */,
+				B66C399624437846001A0897 /* PeripheralSelectTableViewController.h */,
+				B66C399724437846001A0897 /* PeripheralSelectTableViewController.m */,
+				B66C3999244472A0001A0897 /* PeripheralControlViewController.h */,
+				B66C399A244472A0001A0897 /* PeripheralControlViewController.m */,
+			);
+			path = YardBird;
+			sourceTree = "<group>";
+		};
+		B653F097244337A0004DC3A7 /* YardBirdTests */ = {
+			isa = PBXGroup;
+			children = (
+				B653F098244337A0004DC3A7 /* YardBirdTests.m */,
+				B653F09A244337A0004DC3A7 /* Info.plist */,
+			);
+			path = YardBirdTests;
+			sourceTree = "<group>";
+		};
+		B653F0A2244337A0004DC3A7 /* YardBirdUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B653F0A3244337A0004DC3A7 /* YardBirdUITests.m */,
+				B653F0A5244337A0004DC3A7 /* Info.plist */,
+			);
+			path = YardBirdUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B653F0752443379C004DC3A7 /* YardBird */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B653F0A8244337A0004DC3A7 /* Build configuration list for PBXNativeTarget "YardBird" */;
+			buildPhases = (
+				B653F0722443379C004DC3A7 /* Sources */,
+				B653F0732443379C004DC3A7 /* Frameworks */,
+				B653F0742443379C004DC3A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YardBird;
+			productName = YardBird;
+			productReference = B653F0762443379C004DC3A7 /* YardBird.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B653F093244337A0004DC3A7 /* YardBirdTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B653F0AB244337A0004DC3A7 /* Build configuration list for PBXNativeTarget "YardBirdTests" */;
+			buildPhases = (
+				B653F090244337A0004DC3A7 /* Sources */,
+				B653F091244337A0004DC3A7 /* Frameworks */,
+				B653F092244337A0004DC3A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B653F096244337A0004DC3A7 /* PBXTargetDependency */,
+			);
+			name = YardBirdTests;
+			productName = YardBirdTests;
+			productReference = B653F094244337A0004DC3A7 /* YardBirdTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B653F09E244337A0004DC3A7 /* YardBirdUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B653F0AE244337A0004DC3A7 /* Build configuration list for PBXNativeTarget "YardBirdUITests" */;
+			buildPhases = (
+				B653F09B244337A0004DC3A7 /* Sources */,
+				B653F09C244337A0004DC3A7 /* Frameworks */,
+				B653F09D244337A0004DC3A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B653F0A1244337A0004DC3A7 /* PBXTargetDependency */,
+			);
+			name = YardBirdUITests;
+			productName = YardBirdUITests;
+			productReference = B653F09F244337A0004DC3A7 /* YardBirdUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B653F06E2443379C004DC3A7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Gabriel Giosia";
+				TargetAttributes = {
+					B653F0752443379C004DC3A7 = {
+						CreatedOnToolsVersion = 11.4;
+					};
+					B653F093244337A0004DC3A7 = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = B653F0752443379C004DC3A7;
+					};
+					B653F09E244337A0004DC3A7 = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = B653F0752443379C004DC3A7;
+					};
+				};
+			};
+			buildConfigurationList = B653F0712443379C004DC3A7 /* Build configuration list for PBXProject "YardBird" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B653F06D2443379C004DC3A7;
+			productRefGroup = B653F0772443379C004DC3A7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B653F0752443379C004DC3A7 /* YardBird */,
+				B653F093244337A0004DC3A7 /* YardBirdTests */,
+				B653F09E244337A0004DC3A7 /* YardBirdUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B653F0742443379C004DC3A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B653F08C244337A0004DC3A7 /* LaunchScreen.storyboard in Resources */,
+				B653F089244337A0004DC3A7 /* Assets.xcassets in Resources */,
+				B653F0872443379C004DC3A7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B653F092244337A0004DC3A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B653F09D244337A0004DC3A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B653F0722443379C004DC3A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B653F08F244337A0004DC3A7 /* main.m in Sources */,
+				B66C399B244472A0001A0897 /* PeripheralControlViewController.m in Sources */,
+				B66C399824437846001A0897 /* PeripheralSelectTableViewController.m in Sources */,
+				B653F07B2443379C004DC3A7 /* AppDelegate.m in Sources */,
+				B653F07E2443379C004DC3A7 /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B653F090244337A0004DC3A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B653F099244337A0004DC3A7 /* YardBirdTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B653F09B244337A0004DC3A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B653F0A4244337A0004DC3A7 /* YardBirdUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B653F096244337A0004DC3A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B653F0752443379C004DC3A7 /* YardBird */;
+			targetProxy = B653F095244337A0004DC3A7 /* PBXContainerItemProxy */;
+		};
+		B653F0A1244337A0004DC3A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B653F0752443379C004DC3A7 /* YardBird */;
+			targetProxy = B653F0A0244337A0004DC3A7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B653F0852443379C004DC3A7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B653F0862443379C004DC3A7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B653F08A244337A0004DC3A7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B653F08B244337A0004DC3A7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B653F0A6244337A0004DC3A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B653F0A7244337A0004DC3A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B653F0A9244337A0004DC3A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = YardBird/YardBird.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBird/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBird;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B653F0AA244337A0004DC3A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = YardBird/YardBird.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBird/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBird;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B653F0AC244337A0004DC3A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBirdTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YardBird.app/YardBird";
+			};
+			name = Debug;
+		};
+		B653F0AD244337A0004DC3A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBirdTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YardBird.app/YardBird";
+			};
+			name = Release;
+		};
+		B653F0AF244337A0004DC3A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBirdUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YardBird;
+			};
+			name = Debug;
+		};
+		B653F0B0244337A0004DC3A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBirdUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YardBird;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B653F0712443379C004DC3A7 /* Build configuration list for PBXProject "YardBird" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B653F0A6244337A0004DC3A7 /* Debug */,
+				B653F0A7244337A0004DC3A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B653F0A8244337A0004DC3A7 /* Build configuration list for PBXNativeTarget "YardBird" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B653F0A9244337A0004DC3A7 /* Debug */,
+				B653F0AA244337A0004DC3A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B653F0AB244337A0004DC3A7 /* Build configuration list for PBXNativeTarget "YardBirdTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B653F0AC244337A0004DC3A7 /* Debug */,
+				B653F0AD244337A0004DC3A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B653F0AE244337A0004DC3A7 /* Build configuration list for PBXNativeTarget "YardBirdUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B653F0AF244337A0004DC3A7 /* Debug */,
+				B653F0B0244337A0004DC3A7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B653F06E2443379C004DC3A7 /* Project object */;
+}
