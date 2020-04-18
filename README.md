@@ -7,6 +7,10 @@ iOS and MacOS pendant for the WLKATA's Mirobot G1 robot. This ONLY connects via 
 - Hardware: Bluetooth 4.0
 - Compile: Xcode 11.4
 
+## Privacy Policy
+
+This app ONLY sends data to control the robot via Bluetooth. It does not store any data or send data via a network connection.
+
 ## Screenshots
 
 <img width="901" alt="MacOS" src="https://user-images.githubusercontent.com/503792/79641946-a7cc7e00-8168-11ea-800c-84ed03549d38.png">
