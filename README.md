@@ -6,9 +6,9 @@ iOS and MacOS pendant for the WLKATA's Mirobot G1 robot. This ONLY connects via 
 - iOS 13 or MacOS 10.15.4
 - [A Mirobot G1 from WLKATA](http://www.wlkata.com/site/en_index.html?langid=2)
 
-## Development Requirements
+## Development
 
-This app is made using [Catalyst](https://developer.apple.com/mac-catalyst/) and requires Xcode 11.4+ to compile.
+This app is primarily an iOS app and uses [Catalyst](https://developer.apple.com/mac-catalyst/) to work on MacOS. Catalyst requires Xcode 11.4+.
 
 ## Privacy Policy
 
