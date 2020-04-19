@@ -1,4 +1,4 @@
-# Yardbird
+# Yardbirdy
 iOS and MacOS pendant for the WLKATA's Mirobot G1 robot. This ONLY connects via Bluetooth(not USB).
 
 ## Requirements
@@ -32,7 +32,7 @@ This app ONLY sends data to control the robot via Bluetooth. It does not store a
 - The arm can be set to move between locations Slow, Fast and Turbo.
 - The "Zero" button moves the Joints to their zeroed positions.
 - The "Home" button homes all the joints at the same time.
-- The "Stop" button send the robot a "!" gcode command which should stop it. Do not rely on this for safety though.
+- The "Stop" button sends the robot a "!" gcode command which should stop it. Do not rely on this for safety though.
 
 ### Polling:
 
