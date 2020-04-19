@@ -10,7 +10,6 @@
 
 @interface PeripheralControlViewController ()
 
-@property (strong, nonatomic) CBPeripheral *peripheral;
 @property (strong, nonatomic) NSTimer *robotStatusPollingTimer;
 @property (nonatomic) BOOL pollingShowChatter;
 @property (strong, nonatomic) NSString *robotStatus;
@@ -73,7 +72,8 @@
   self.loadingView = [[UIView alloc] initWithFrame:self.view.bounds];
   self.loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.loadingView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-  [self.view addSubview:self.loadingView];
+  //[self.view addSubview:self.loadingView];
+
   for (UIStepper *stepper in self.jointSteppers) {
     [stepper addTarget:self action:@selector(jointSteppersChanged) forControlEvents:UIControlEventValueChanged];
   }
@@ -94,6 +94,7 @@
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillHideNotification object:nil];
   [self updatePolling];
+  [self updateNavTitle];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -109,7 +110,7 @@
   [self.consoleTextView scrollRectToVisible:CGRectMake(self.consoleTextView.contentSize.width - 1,self.consoleTextView.contentSize.height - 1, 1, 1) animated:NO];
 }
 
-- (void)connectPeripheral:(CBPeripheral *)peripheral {
+- (void)setPeripheral:(CBPeripheral *)peripheral {
   [UIView animateWithDuration:0.15f animations:^{
     [self.loadingView setAlpha:0.0f];
   } completion:^(BOOL finished) {
@@ -117,7 +118,7 @@
     self.loadingView = nil;
   }];
 
-  self.peripheral = peripheral;
+  _peripheral = peripheral;
   peripheral.delegate = self;
   [peripheral discoverServices:nil];
 }
@@ -128,7 +129,7 @@
   if (keyboardHeight > 50) {
     self.scrollViewHeightConstraint.constant = 0;
   }
-  self.consoleBottomConstraint.constant = keyboardHeight;
+  self.consoleBottomConstraint.constant = keyboardHeight + 4;
 }
 
 - (void)sendValue:(NSString *) str {
@@ -165,21 +166,11 @@
 -(void)jointSteppersChanged {
   double speed;
   switch (self.speedSegmentedControl.selectedSegmentIndex) {
-    case 4:
-      speed = 6600;
-      break;
-    case 3:
-      speed = 2000;
-      break;
-    case 2:
-      speed = 1000;
-      break;
-    case 1:
-      speed = 500;
-      break;
-    default:
-      speed = 200;
-      break;
+    case 4: speed = 6600; break;
+    case 3: speed = 2000; break;
+    case 2: speed = 1000; break;
+    case 1: speed = 500; break;
+    default: speed = 200; break;
   }
   [self sendValue:[NSString stringWithFormat:@"M21 G90 G01 X%.3lf Y%.3lf Z%.3lf A%.3lf B%.3lf C%.3lf F%.2lf",
                    self.joint1Stepper.value,
@@ -199,21 +190,11 @@
 -(void)axisSteppersChanged {
   double speed;
   switch (self.speedSegmentedControl.selectedSegmentIndex) {
-    case 4:
-      speed = 10000;
-      break;
-    case 3:
-      speed = 4000;
-      break;
-    case 2:
-      speed = 1500;
-      break;
-    case 1:
-      speed = 500;
-      break;
-    default:
-      speed = 100;
-      break;
+    case 4: speed = 10000; break;
+    case 3: speed = 4000; break;
+    case 2: speed = 1500; break;
+    case 1: speed = 500; break;
+    default: speed = 100; break;
   }
   [self sendValue:[NSString stringWithFormat:@"M20 G90 G0 X%.3lf Y%.3lf Z%.3lf A%.3lf B%.3lf C%.3lf F%.2lf",
                    self.axis1Stepper.value,
@@ -273,6 +254,26 @@
   }
 }
 
+- (void)updateNavTitle {
+  NSString *navTitle = nil;
+  if (self.peripheral == nil) {
+    navTitle = @"Trying to Connect";
+  } else {
+    switch (self.peripheral.state) {
+      case CBPeripheralStateConnected:
+        if (self.robotStatus) {
+          navTitle = [NSString stringWithFormat:@"Status: %@", self.robotStatus];
+        } else {
+          navTitle = @"Connected";
+        }
+        break;
+      case CBPeripheralStateConnecting: navTitle = @"Connecting"; break;
+      default: navTitle = @"Not Connected"; break;
+    }
+  }
+  self.navigationItem.title = navTitle;
+}
+
 - (void)vacuumSegmentChange {
   if (self.vacuumSegmentedControl.selectedSegmentIndex == 0) {
     [self sendValue:@"M3S0"];
@@ -290,19 +291,7 @@
 }
 
 -(void) pollingTimer:(NSTimer *)timer {
-  if (self.peripheral.state ==  CBPeripheralStateConnected) {
-    if (self.robotStatus.length > 0) {
-      self.navigationItem.title = [NSString stringWithFormat:@"Status: %@", self.robotStatus];
-    } else {
-      self.robotStatus = nil;
-    }
-  } else {
-    if (self.peripheral.state ==  CBPeripheralStateConnecting) {
-      self.navigationItem.title = @"Connecting";
-    } else {
-      self.navigationItem.title = @"Not Connected";
-    }
-  }
+  [self updateNavTitle];
   [self sendValue:@"?"];
 }
 
@@ -327,6 +316,7 @@
   for (CBCharacteristic * character in [service characteristics]) {
     [peripheral discoverDescriptorsForCharacteristic:character];
   }
+  [self updateNavTitle];
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
@@ -405,9 +395,7 @@
     }
   }
   self.peripheralTextBuffer = lines.lastObject;
-}
-
-- (void)updateInterfaceJoints:(NSArray<NSNumber*>*)joints axises:(NSArray<NSNumber*>*)axises {
+  [self updateNavTitle];
 }
 
 #pragma mark - IBActions
@@ -430,6 +418,12 @@
 }
 
 -(IBAction)homeRobot:(id)sender {
+  for (UIStepper *stepper in self.axisSteppers) {
+    stepper.enabled = NO;
+  }
+  for (UIStepper *stepper in self.jointSteppers) {
+    stepper.enabled = NO;
+  }
   [self sendValue:@"$h"];
 }
 

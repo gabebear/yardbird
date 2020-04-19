@@ -26,6 +26,10 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  if (self.selectedPeripheralController.peripheral) {
+    [self.centralManager cancelPeripheralConnection:self.selectedPeripheralController.peripheral];
+    self.selectedPeripheralController = nil;
+  }
   NSMutableDictionary<NSString *, CBPeripheral *> *connectedPeripherals = [NSMutableDictionary dictionary];
   for (NSString *uuid in self.peripherals) {
     CBPeripheral *peripheral = self.peripherals[uuid];
@@ -65,7 +69,7 @@
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-  [self.selectedPeripheralController connectPeripheral:peripheral];
+  self.selectedPeripheralController.peripheral = peripheral;
 }
 
 #pragma mark - Navigation

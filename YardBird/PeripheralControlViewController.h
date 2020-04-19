@@ -13,24 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PeripheralControlViewController : UIViewController <CBPeripheralDelegate, UITextFieldDelegate>
 
+@property (strong, nonatomic) CBPeripheral *peripheral;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *consoleBottomConstraint;
 @property (weak, nonatomic) IBOutlet UITextField *consoleTextField;
 @property (weak, nonatomic) IBOutlet UITextView *consoleTextView;
-
-//@property (weak, nonatomic) IBOutlet UILabel *axis1NameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis2NameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis3NameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis4NameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis5NameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis6NameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis1ValueLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis2ValueLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis3ValueLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis4ValueLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis5ValueLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *axis6ValueLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *speedValueLabel;
 
 @property (weak, nonatomic) IBOutlet UIStepper *joint1Stepper;
 @property (weak, nonatomic) IBOutlet UIStepper *joint2Stepper;
