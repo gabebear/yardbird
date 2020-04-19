@@ -1,11 +1,14 @@
 # Yardbird
 iOS and MacOS pendant for the WLKATA's Mirobot G1 robot. This ONLY connects via Bluetooth(not USB).
 
-## Requirements
+## Runtime Requirements
 
-- OS: iOS 13 or MacOS 10.15.4
-- Hardware: Bluetooth 4.0
-- Compile: Xcode 11.4
+- iOS 13 or MacOS 10.15.4
+- [A Mirobot G1 from WLKATA](http://www.wlkata.com/site/en_index.html?langid=2)
+
+## Development Requirements
+
+This app is made using [Catalyst](https://developer.apple.com/mac-catalyst/) and requires Xcode 11.4+ to compile.
 
 ## Privacy Policy
 
@@ -18,8 +21,6 @@ This app ONLY sends data to control the robot via Bluetooth. It does not store a
 <img width="300" alt="iPhone" src="https://user-images.githubusercontent.com/503792/79641961-c894d380-8168-11ea-837e-4c2cb874603c.jpeg">
 
 ## Usage
-
-### Basics:
 
 - Tap on the J1 through J6 steppers to adjust the angle of the six joints.
   - The bars next to the J1-J6 steppers show you how close to their limits the joints are.
@@ -35,11 +36,11 @@ This app ONLY sends data to control the robot via Bluetooth. It does not store a
 
 ### Polling:
 
-The app polls the status of the machine every second to find it's current location. This status is displayed in the titlebar("Idle" vs "Run") and the axises that are not actively being adjusted. There are three setting to control how polling works:
+The app polls the status of the robot every second to find its current location. This status is displayed in the titlebar("Idle" vs "Run"). There are three setting to control how polling works:
 
-- No polling: (Not recommended) This disables all polling but is useful if you want a vanilla console.
+- Disable polling: (Not recommended) This disables all polling but is useful if you want a vanilla gcode console.
 - Show polling: This will show all the polling in the console.
-- Hide Chatter: This hides the status commands, the status responses, and "ok" responses. If a message is malformed it might still show in the console, so this filter is not perfect.
+- Filter Chatter: This hides the status responses and "ok" responses. If a message is malformed it might still show in the console, so this filter is not perfect.
 
 
 
