@@ -1,7 +1,7 @@
 # Yardbird
 iOS and MacOS pendant for the WLKATA's Mirobot G1 robot. This ONLY connects via Bluetooth(not USB).
 
-## Runtime Requirements
+## Requirements
 
 - iOS 13 or MacOS 10.15.4
 - [A Mirobot G1 from WLKATA](http://www.wlkata.com/site/en_index.html?langid=2)
