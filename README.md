@@ -1,6 +1,8 @@
 # Yardbirdy
 iOS and MacOS pendant for the WLKATA's Mirobot G1 robot. This ONLY connects via Bluetooth(not USB).
 
+Available in the [App Store](https://apps.apple.com/us/app/yardbirdy/id1508773251)
+
 ## Requirements
 
 - iOS 13 or MacOS 10.15.4
