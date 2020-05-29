@@ -7,19 +7,22 @@
 //
 
 #import "PeripheralControlViewController.h"
+#import <YardBirdRobot/Robot.h>
 
-@interface PeripheralControlViewController ()
+@interface PeripheralControlViewController ( )<RobotDelegate, UITextFieldDelegate>
 
-@property (strong, nonatomic) NSTimer *robotStatusPollingTimer;
+@property (strong, nonatomic) Robot *robot;
+
 @property (nonatomic) BOOL pollingShowChatter;
 @property (strong, nonatomic) NSString *robotStatus;
-@property (strong, nonatomic) NSString *peripheralTextBuffer;
 @property (strong, nonatomic) UIView *loadingView;
 @property (strong, nonatomic) NSArray<UIStepper*> *jointSteppers;
 @property (strong, nonatomic) NSArray<UILabel*> *jointLabels;
 @property (strong, nonatomic) NSArray<UIStepper*> *axisSteppers;
 @property (strong, nonatomic) NSArray<UILabel*> *axisLabels;
 @property (strong, nonatomic) NSArray<UIProgressView*> *jointProgressViews;
+@property (assign, nonatomic) RobotStatus previousRobotStatus;
+
 
 @end
 
@@ -68,12 +71,6 @@
     self.joint6ProgressView,
   ];
 
-  self.consoleTextField.delegate = self;
-  self.loadingView = [[UIView alloc] initWithFrame:self.view.bounds];
-  self.loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.loadingView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-  //[self.view addSubview:self.loadingView];
-
   for (UIStepper *stepper in self.jointSteppers) {
     [stepper addTarget:self action:@selector(jointSteppersChanged) forControlEvents:UIControlEventValueChanged];
   }
@@ -87,22 +84,21 @@
   [self.vacuumSegmentedControl addTarget:self action:@selector(vacuumSegmentChange) forControlEvents:UIControlEventValueChanged];
   [self.gripperSegmentedControl addTarget:self action:@selector(gripperSegmentChange) forControlEvents:UIControlEventValueChanged];
   [self.pollingSegmentedControl addTarget:self action:@selector(updatePolling) forControlEvents:UIControlEventValueChanged];
+
+  [self selectRobot];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillHideNotification object:nil];
-  [self updatePolling];
-  [self updateNavTitle];
+  self.navigationItem.title = @"Not Connected";
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-  [self.robotStatusPollingTimer invalidate];
-  self.robotStatusPollingTimer = nil;
 }
 
 - (void)scrollConsoleToBottom {
@@ -110,17 +106,29 @@
   [self.consoleTextView scrollRectToVisible:CGRectMake(self.consoleTextView.contentSize.width - 1,self.consoleTextView.contentSize.height - 1, 1, 1) animated:NO];
 }
 
-- (void)setPeripheral:(CBPeripheral *)peripheral {
-  [UIView animateWithDuration:0.15f animations:^{
-    [self.loadingView setAlpha:0.0f];
-  } completion:^(BOOL finished) {
-    [self.loadingView removeFromSuperview];
-    self.loadingView = nil;
+- (void)selectRobot {
+  if (!self.loadingView) {
+    self.loadingView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.loadingView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+    [self.view addSubview:self.loadingView];
+  }
+  [Robot presentPickerFrom:self delegate:self completion:^(Robot * _Nonnull robot) {
+    if (robot) {
+      self.robot = robot;
+    }
+    if (self.robot) {
+      self.navigationItem.title = @"Connecting...";
+      [UIView animateWithDuration:0.15f animations:^{
+        [self.loadingView setAlpha:0.0f];
+      } completion:^(BOOL finished) {
+        [self.loadingView removeFromSuperview];
+        self.loadingView = nil;
+      }];
+    } else {
+      self.navigationItem.title = @"Not Connected";
+    }
   }];
-
-  _peripheral = peripheral;
-  peripheral.delegate = self;
-  [peripheral discoverServices:nil];
 }
 
 -(void)keyboardFrameWillChange:(NSNotification*)notification {
@@ -130,20 +138,6 @@
     self.scrollViewHeightConstraint.constant = 0;
   }
   self.consoleBottomConstraint.constant = keyboardHeight + 4;
-}
-
-- (void)sendValue:(NSString *) str {
-  for (CBService * service in self.peripheral.services) {
-    for (CBCharacteristic * characteristic in service.characteristics) {
-      NSString *crLfStr = [NSString stringWithFormat:@"%@\r\n", str];
-      [self.peripheral writeValue:[crLfStr dataUsingEncoding:NSASCIIStringEncoding]
-                forCharacteristic:characteristic
-                             type:CBCharacteristicWriteWithoutResponse];
-    }
-  }
-  if (self.pollingShowChatter || ![str isEqualToString:@"?"]) {
-    [self sendToConsole:[@"\n" stringByAppendingString:str] color:[UIColor labelColor]];
-  }
 }
 
 - (void)sendToConsole:(NSString *)str color:(UIColor *)color {
@@ -156,7 +150,6 @@
                                                                         NSFontAttributeName : [UIFont fontWithName:@"Courier New" size:16]
                                                                       }]];
   self.consoleTextView.attributedText = [consoleText copy];
-  // self.consoleTextView.text = [NSString stringWithFormat:@"%@\n%@", self.consoleTextView.text, str];
   self.consoleTextView.selectedRange = selectedRange;
   if (scrollViewAtBottom) {
     [self scrollConsoleToBottom];
@@ -172,15 +165,7 @@
     case 1: speed = 500; break;
     default: speed = 200; break;
   }
-  [self sendValue:[NSString stringWithFormat:@"M21 G90 G01 X%.3lf Y%.3lf Z%.3lf A%.3lf B%.3lf C%.3lf F%.2lf",
-                   self.joint1Stepper.value,
-                   self.joint2Stepper.value,
-                   self.joint3Stepper.value,
-                   self.joint4Stepper.value,
-                   self.joint5Stepper.value,
-                   self.joint6Stepper.value,
-                   speed
-                   ]];
+  [self.robot sendGcode:[Robot gcodeForJointCoordinate:[self coordinateFromJointSteppers] speed:speed]];
   for (UIStepper *stepper in self.axisSteppers) {
     stepper.enabled = NO;
   }
@@ -188,23 +173,7 @@
 }
 
 -(void)axisSteppersChanged {
-  double speed;
-  switch (self.speedSegmentedControl.selectedSegmentIndex) {
-    case 4: speed = 10000; break;
-    case 3: speed = 4000; break;
-    case 2: speed = 1500; break;
-    case 1: speed = 500; break;
-    default: speed = 100; break;
-  }
-  [self sendValue:[NSString stringWithFormat:@"M20 G90 G0 X%.3lf Y%.3lf Z%.3lf A%.3lf B%.3lf C%.3lf F%.2lf",
-                   self.axis1Stepper.value,
-                   self.axis2Stepper.value,
-                   self.axis3Stepper.value,
-                   self.axis4Stepper.value,
-                   self.axis5Stepper.value,
-                   self.axis6Stepper.value,
-                   speed
-                   ]];
+  [self.robot sendGcode:[Robot gcodeForCartesianCoordinate:[self coordinateFromAxisSteppers]]];
   for (UIStepper *stepper in self.jointSteppers) {
     stepper.enabled = NO;
   }
@@ -214,10 +183,8 @@
 -(void)updateLabelsFromSteppers {
   for (NSInteger i = 0; i < 6; i++) {
     UIStepper *jointStepper = self.jointSteppers[i];
-    UILabel *jointLabel = self.jointLabels[i];
-    UIProgressView *progressView = self.jointProgressViews[i];
-    jointLabel.text = [NSString stringWithFormat:@"%.3lf°",jointStepper.value];
-    progressView.progress = (jointStepper.value - jointStepper.minimumValue) / (jointStepper.maximumValue - jointStepper.minimumValue);
+    self.jointLabels[i].text = [NSString stringWithFormat:@"%.3lf°",jointStepper.value];
+    self.jointProgressViews[i].progress = (jointStepper.value - jointStepper.minimumValue) / (jointStepper.maximumValue - jointStepper.minimumValue);
   }
   self.axisLabels[0].text = [NSString stringWithFormat:@"%.3lf㎜", self.axisSteppers[0].value];
   self.axisLabels[1].text = [NSString stringWithFormat:@"%.3lf㎜", self.axisSteppers[1].value];
@@ -225,6 +192,40 @@
   self.axisLabels[3].text = [NSString stringWithFormat:@"%.3lf°", self.axisSteppers[3].value];
   self.axisLabels[4].text = [NSString stringWithFormat:@"%.3lf°", self.axisSteppers[4].value];
   self.axisLabels[5].text = [NSString stringWithFormat:@"%.3lf°", self.axisSteppers[5].value];
+}
+
+- (RobotJointCoordinate)coordinateFromJointSteppers {
+  return (RobotJointCoordinate){
+    self.joint1Stepper.value,
+    self.joint2Stepper.value,
+    self.joint3Stepper.value,
+    self.joint4Stepper.value,
+    self.joint5Stepper.value,
+    self.joint6Stepper.value,
+  };
+}
+
+- (RobotCartesianCoordinate)coordinateFromAxisSteppers {
+  return (RobotCartesianCoordinate){
+    self.axis1Stepper.value,
+    self.axis2Stepper.value,
+    self.axis3Stepper.value,
+    self.axis4Stepper.value,
+    self.axis5Stepper.value,
+    self.axis6Stepper.value,
+  };
+}
+
+- (void)setJointSteppersEnabled:(BOOL)enabled {
+  for (NSInteger i = 0; i < 6; i++) {
+    self.jointSteppers[i].enabled = enabled;
+  }
+}
+
+- (void)setAxisSteppersEnabled:(BOOL)enabled {
+  for (NSInteger i = 0; i < 6; i++) {
+    self.axisSteppers[i].enabled = enabled;
+  }
 }
 
 - (void)updateStepSize {
@@ -239,163 +240,46 @@
 
 - (void)updatePolling {
   if (self.pollingSegmentedControl.selectedSegmentIndex == 0) {
-    [self.robotStatusPollingTimer invalidate];
-    self.robotStatusPollingTimer = nil;
-    self.pollingShowChatter = YES;
+    self.robot.pollingEnabled = NO;
+    self.robot.pollingShowChatter = YES;
   } else {
-    if (!self.robotStatusPollingTimer) {
-      self.robotStatusPollingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                                      target:self
-                                                                    selector:@selector(pollingTimer:)
-                                                                    userInfo:nil
-                                                                     repeats:YES];
-    }
-    self.pollingShowChatter = self.pollingSegmentedControl.selectedSegmentIndex == 1;
+    self.robot.pollingEnabled = YES;
+    self.robot.pollingShowChatter = self.pollingSegmentedControl.selectedSegmentIndex == 1;
   }
-}
-
-- (void)updateNavTitle {
-  NSString *navTitle = nil;
-  if (self.peripheral == nil) {
-    navTitle = @"Trying to Connect";
-  } else {
-    switch (self.peripheral.state) {
-      case CBPeripheralStateConnected:
-        if (self.robotStatus) {
-          navTitle = [NSString stringWithFormat:@"Status: %@", self.robotStatus];
-        } else {
-          navTitle = @"Connected";
-        }
-        break;
-      case CBPeripheralStateConnecting: navTitle = @"Connecting"; break;
-      default: navTitle = @"Not Connected"; break;
-    }
-  }
-  self.navigationItem.title = navTitle;
 }
 
 - (void)vacuumSegmentChange {
-  if (self.vacuumSegmentedControl.selectedSegmentIndex == 0) {
-    [self sendValue:@"M3S0"];
-  } else {
-    [self sendValue:@"M3S1000"];
+  double pwmValue = 0;
+  if (self.vacuumSegmentedControl.selectedSegmentIndex == 1) {
+    pwmValue = 1000;
   }
+  RobotStatus status = self.previousRobotStatus;
+  status.vacuumPWM = pwmValue;
+  self.previousRobotStatus = status;
+  [self.robot sendGcode:[Robot gcodeForVacuumPWM:pwmValue]];
+}
+
+- (double)gripperValueForSegmentIndex:(NSUInteger)index {
+  double min = 40;
+  double max = 65;
+  return min + ((max - min) * (index / (self.gripperSegmentedControl.numberOfSegments - 1.0)));
 }
 
 - (void)gripperSegmentChange {
-  double min = 40;
-  double max = 65;
-  double value = min + ((max - min) * (self.gripperSegmentedControl.selectedSegmentIndex / (self.gripperSegmentedControl.numberOfSegments - 1.0)));
-
-  [self sendValue:[NSString stringWithFormat:@"M4E%.0lf", value]];
-}
-
--(void) pollingTimer:(NSTimer *)timer {
-  [self updateNavTitle];
-  [self sendValue:@"?"];
+  double pwmValue = [self gripperValueForSegmentIndex:self.gripperSegmentedControl.selectedSegmentIndex];
+  RobotStatus status = self.previousRobotStatus;
+  status.gripperPWM = pwmValue;
+  self.previousRobotStatus = status;
+  [self.robot sendGcode:[Robot gcodeForGripperPWM:pwmValue]];
 }
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  [self sendValue:textField.text];
+  [self.robot sendGcode:(Gcode){textField.text}];
   textField.text = @"";
   [self scrollConsoleToBottom];
   return NO;
-}
-
-#pragma mark - CBPeripheralDelegate
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
-  for (CBService * service in peripheral.services) {
-    [peripheral discoverCharacteristics:nil forService:service];
-  }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
-  for (CBCharacteristic * character in [service characteristics]) {
-    [peripheral discoverDescriptorsForCharacteristic:character];
-  }
-  [self updateNavTitle];
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-  const char *bytes = [(NSData*)[[characteristic UUID]data] bytes];
-  if (bytes && strlen(bytes) == 2 && bytes[0] == (char)0xFF && bytes[1] == (char)0xE1) {
-    for(CBService * service in [peripheral services]){
-      for (CBCharacteristic * characteristic in [service characteristics]){
-        [peripheral setNotifyValue:true forCharacteristic:characteristic];
-      }
-    }
-  }
-}
-
--(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-  if (!self.peripheralTextBuffer) {
-    self.peripheralTextBuffer = @"";
-  }
-  NSRegularExpression *statusRegexExpression = [NSRegularExpression regularExpressionWithPattern:@"^<([^,]+),Angle\\(ABCDXYZ\\):(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),Cartesian coordinate\\(XYZ RxRyRz\\):(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),Pump PWM:(\\d+),Valve PWM:(\\d+),Motion_MODE:(\\d+)>$" options:NSRegularExpressionCaseInsensitive|NSRegularExpressionAnchorsMatchLines error:nil];
-  NSString *raw = [[[NSString alloc] initWithData:[characteristic value] encoding:NSASCIIStringEncoding] stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
-  self.peripheralTextBuffer = [self.peripheralTextBuffer stringByAppendingString:raw];
-  NSArray *lines = [self.peripheralTextBuffer componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-  for (NSInteger i = 0; i < lines.count - 1; i++) {
-    BOOL isLogChatter = NO;
-    NSString *line = lines[i];
-    if ([line isEqualToString:@"ok"]) {
-      isLogChatter = YES;
-      line = [@" " stringByAppendingString:line];
-    } else {
-      NSArray *statusMatches = [statusRegexExpression matchesInString:line options:0 range:NSMakeRange(0, [line length])];
-      if (statusMatches.count == 1) {
-        isLogChatter = YES;
-        NSTextCheckingResult *match = statusMatches[0];
-        self.robotStatus = [line substringWithRange:[match rangeAtIndex:1]];
-        NSArray<NSString*> *jointValues = @[
-          [line substringWithRange:[match rangeAtIndex:6]],
-          [line substringWithRange:[match rangeAtIndex:7]],
-          [line substringWithRange:[match rangeAtIndex:8]],
-          [line substringWithRange:[match rangeAtIndex:2]],
-          [line substringWithRange:[match rangeAtIndex:3]],
-          [line substringWithRange:[match rangeAtIndex:4]]
-        ];
-        NSArray<NSString*> *axisValues = @[
-          [line substringWithRange:[match rangeAtIndex:9]],
-          [line substringWithRange:[match rangeAtIndex:10]],
-          [line substringWithRange:[match rangeAtIndex:11]],
-          [line substringWithRange:[match rangeAtIndex:12]],
-          [line substringWithRange:[match rangeAtIndex:13]],
-          [line substringWithRange:[match rangeAtIndex:14]]
-        ];
-        BOOL isIdle = [self.robotStatus isEqualToString:@"Idle"];
-        for (NSInteger i = 0; i < 6; i++) {
-          UIStepper *jointStepper = self.jointSteppers[i];
-          if (!jointStepper.enabled) {
-            jointStepper.value = [jointValues[i] doubleValue];
-            if (isIdle) {
-              jointStepper.enabled = YES;
-            }
-          }
-          UIStepper *axisStepper = self.axisSteppers[i];
-          if (!axisStepper.enabled) {
-            axisStepper.value = [axisValues[i] doubleValue];
-            if (isIdle) {
-              axisStepper.enabled = YES;
-            }
-          }
-        }
-        [self updateLabelsFromSteppers];
-      }
-      if (line.length == 0) {
-        isLogChatter = YES;
-      }
-      line = [@"\n" stringByAppendingString:line];
-    }
-    if (self.pollingShowChatter || !isLogChatter) {
-      [self sendToConsole:line color:[UIColor linkColor]];
-    }
-  }
-  self.peripheralTextBuffer = lines.lastObject;
-  [self updateNavTitle];
 }
 
 #pragma mark - IBActions
@@ -413,24 +297,97 @@
   for (UIStepper *stepper in self.jointSteppers) {
     stepper.value = 0.0;
   }
-  [self updateLabelsFromSteppers];
   [self jointSteppersChanged];
 }
 
 -(IBAction)homeRobot:(id)sender {
-  for (UIStepper *stepper in self.axisSteppers) {
-    stepper.enabled = NO;
-  }
-  for (UIStepper *stepper in self.jointSteppers) {
-    stepper.enabled = NO;
-  }
-  [self sendValue:@"$h"];
+  [self setAxisSteppersEnabled:NO];
+  [self setJointSteppersEnabled:NO];
+  [self.robot sendGcode:[Robot gcodeForHome]];
 }
 
 -(IBAction)stopRobot:(id)sender {
-  [self sendValue:@"!"];
+  [self.robot sendEmergencyStop];
 }
 
+-(IBAction)pickRobot:(id)sender {
+  [self selectRobot];
+}
+
+#pragma mark - RobotDelegate
+
+- (void)robot:(Robot *)robot didSendStatus:(RobotStatus)status {
+  switch (status.state) {
+    case RobotStateIdle:
+      self.navigationItem.title = @"Status: Idle";
+      [self setAxisSteppersEnabled:YES];
+      [self setJointSteppersEnabled:YES];
+      break;
+    case RobotStateHoming:
+      self.navigationItem.title = @"Status: Homing";
+      [self setAxisSteppersEnabled:NO];
+      [self setJointSteppersEnabled:NO];
+      break;
+    case RobotStateRun:
+      self.navigationItem.title = @"Status: Running";
+      if (status.isCartesianMode) {
+        [self setJointSteppersEnabled:NO];
+      } else {
+        [self setAxisSteppersEnabled:NO];
+      }
+      break;
+    case RobotStateHold:
+      self.navigationItem.title = @"Status: HOLD";
+      break;
+    case RobotStateAtarm:
+      self.navigationItem.title = @"Status: ALARM!";
+      break;
+    case RobotStateCheck:
+      self.navigationItem.title = @"Status: CHECK!";
+      break;
+    case RobotStateDoor:
+      self.navigationItem.title = @"Status: DOOR!";
+      break;
+    case RobotStateUnknown:
+      self.navigationItem.title = @"Status: Unknown";
+      break;
+  }
+  if (status.state == RobotStateIdle || status.isCartesianMode) {
+    for (NSInteger i = 0; i < 6; i++) {
+      self.jointSteppers[i].value = status.joints.values[i];
+    }
+  }
+  if (status.state == RobotStateIdle || !status.isCartesianMode) {
+    for (NSInteger i = 0; i < 6; i++) {
+      self.axisSteppers[i].value = status.cartesian.values[i];
+    }
+  }
+  [self updateLabelsFromSteppers];
+  if (self.previousRobotStatus.vacuumPWM == status.vacuumPWM) {
+    self.vacuumSegmentedControl.selectedSegmentIndex = status.vacuumPWM < 500 ? 0 : 1;
+  }
+  if (self.previousRobotStatus.gripperPWM == status.gripperPWM) {
+    NSUInteger gripperSegmentIndex = self.gripperSegmentedControl.selectedSegmentIndex;
+    for (NSInteger i = 0; i < self.gripperSegmentedControl.numberOfSegments; i++) {
+      if ([self gripperValueForSegmentIndex:i] >= status.gripperPWM) {
+        gripperSegmentIndex = i;
+        break;
+      }
+    }
+    self.gripperSegmentedControl.selectedSegmentIndex = gripperSegmentIndex;
+  }
+
+  self.previousRobotStatus = status;
+}
+
+- (void)robot:(Robot *)robot didSendMessage:(NSString *)message {
+  [self sendToConsole:message color:[UIColor linkColor]];
+}
+
+
+- (void)robot:(Robot *)robot wasSentGcode:(Gcode)gcode {
+  [self sendToConsole:[@"\n" stringByAppendingString:gcode.command] color:[UIColor labelColor]];
+}
 #pragma mark - end
 
 @end

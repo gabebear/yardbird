@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B6105F6224796B91005658B2 /* YardBirdRobot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6105F5924796B90005658B2 /* YardBirdRobot.framework */; };
+		B6105F6924796B91005658B2 /* YardBirdRobotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6105F6824796B91005658B2 /* YardBirdRobotTests.m */; };
+		B6105F6B24796B91005658B2 /* YardBirdRobot.h in Headers */ = {isa = PBXBuildFile; fileRef = B6105F5B24796B90005658B2 /* YardBirdRobot.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B6105F6E24796B91005658B2 /* YardBirdRobot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6105F5924796B90005658B2 /* YardBirdRobot.framework */; };
+		B6105F6F24796B91005658B2 /* YardBirdRobot.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6105F5924796B90005658B2 /* YardBirdRobot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B6105F7824796C53005658B2 /* Robot.h in Headers */ = {isa = PBXBuildFile; fileRef = B6105F7624796C53005658B2 /* Robot.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B6105F7924796C53005658B2 /* Robot.m in Sources */ = {isa = PBXBuildFile; fileRef = B6105F7724796C53005658B2 /* Robot.m */; };
+		B6105F7A247A1784005658B2 /* RobotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B66C399724437846001A0897 /* RobotManager.m */; };
 		B653F07B2443379C004DC3A7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F07A2443379C004DC3A7 /* AppDelegate.m */; };
 		B653F07E2443379C004DC3A7 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F07D2443379C004DC3A7 /* SceneDelegate.m */; };
 		B653F0872443379C004DC3A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B653F0852443379C004DC3A7 /* Main.storyboard */; };
@@ -15,11 +23,31 @@
 		B653F08F244337A0004DC3A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F08E244337A0004DC3A7 /* main.m */; };
 		B653F099244337A0004DC3A7 /* YardBirdTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F098244337A0004DC3A7 /* YardBirdTests.m */; };
 		B653F0A4244337A0004DC3A7 /* YardBirdUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F0A3244337A0004DC3A7 /* YardBirdUITests.m */; };
-		B66C399824437846001A0897 /* PeripheralSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B66C399724437846001A0897 /* PeripheralSelectTableViewController.m */; };
 		B66C399B244472A0001A0897 /* PeripheralControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B66C399A244472A0001A0897 /* PeripheralControlViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B6105F6324796B91005658B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B653F06E2443379C004DC3A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6105F5824796B90005658B2;
+			remoteInfo = YardBirdRobot;
+		};
+		B6105F6524796B91005658B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B653F06E2443379C004DC3A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B653F0752443379C004DC3A7;
+			remoteInfo = YardBird;
+		};
+		B6105F6C24796B91005658B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B653F06E2443379C004DC3A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6105F5824796B90005658B2;
+			remoteInfo = YardBirdRobot;
+		};
 		B653F095244337A0004DC3A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B653F06E2443379C004DC3A7 /* Project object */;
@@ -36,7 +64,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B6105F2924796924005658B2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B6105F6F24796B91005658B2 /* YardBirdRobot.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		B6105F5924796B90005658B2 /* YardBirdRobot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YardBirdRobot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6105F5B24796B90005658B2 /* YardBirdRobot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YardBirdRobot.h; sourceTree = "<group>"; };
+		B6105F5C24796B91005658B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6105F6124796B91005658B2 /* YardBirdRobotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YardBirdRobotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6105F6824796B91005658B2 /* YardBirdRobotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YardBirdRobotTests.m; sourceTree = "<group>"; };
+		B6105F6A24796B91005658B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6105F7624796C53005658B2 /* Robot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Robot.h; sourceTree = "<group>"; };
+		B6105F7724796C53005658B2 /* Robot.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Robot.m; sourceTree = "<group>"; };
 		B653F0762443379C004DC3A7 /* YardBirdy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YardBirdy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B653F0792443379C004DC3A7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B653F07A2443379C004DC3A7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -54,17 +104,33 @@
 		B653F0A3244337A0004DC3A7 /* YardBirdUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YardBirdUITests.m; sourceTree = "<group>"; };
 		B653F0A5244337A0004DC3A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B653F0B1244337F0004DC3A7 /* YardBird.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YardBird.entitlements; sourceTree = "<group>"; };
-		B66C399624437846001A0897 /* PeripheralSelectTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralSelectTableViewController.h; sourceTree = "<group>"; };
-		B66C399724437846001A0897 /* PeripheralSelectTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralSelectTableViewController.m; sourceTree = "<group>"; };
+		B66C399624437846001A0897 /* RobotManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RobotManager.h; sourceTree = "<group>"; };
+		B66C399724437846001A0897 /* RobotManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RobotManager.m; sourceTree = "<group>"; };
 		B66C3999244472A0001A0897 /* PeripheralControlViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralControlViewController.h; sourceTree = "<group>"; };
 		B66C399A244472A0001A0897 /* PeripheralControlViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralControlViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B6105F5624796B90005658B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6105F5E24796B91005658B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6105F6224796B91005658B2 /* YardBirdRobot.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B653F0732443379C004DC3A7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6105F6E24796B91005658B2 /* YardBirdRobot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,12 +151,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B6105F5A24796B90005658B2 /* YardBirdRobot */ = {
+			isa = PBXGroup;
+			children = (
+				B6105F5B24796B90005658B2 /* YardBirdRobot.h */,
+				B6105F5C24796B91005658B2 /* Info.plist */,
+				B6105F7624796C53005658B2 /* Robot.h */,
+				B6105F7724796C53005658B2 /* Robot.m */,
+				B66C399624437846001A0897 /* RobotManager.h */,
+				B66C399724437846001A0897 /* RobotManager.m */,
+			);
+			path = YardBirdRobot;
+			sourceTree = "<group>";
+		};
+		B6105F6724796B91005658B2 /* YardBirdRobotTests */ = {
+			isa = PBXGroup;
+			children = (
+				B6105F6824796B91005658B2 /* YardBirdRobotTests.m */,
+				B6105F6A24796B91005658B2 /* Info.plist */,
+			);
+			path = YardBirdRobotTests;
+			sourceTree = "<group>";
+		};
 		B653F06D2443379C004DC3A7 = {
 			isa = PBXGroup;
 			children = (
 				B653F0782443379C004DC3A7 /* YardBird */,
 				B653F097244337A0004DC3A7 /* YardBirdTests */,
 				B653F0A2244337A0004DC3A7 /* YardBirdUITests */,
+				B6105F5A24796B90005658B2 /* YardBirdRobot */,
+				B6105F6724796B91005658B2 /* YardBirdRobotTests */,
 				B653F0772443379C004DC3A7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,6 +191,8 @@
 				B653F0762443379C004DC3A7 /* YardBirdy.app */,
 				B653F094244337A0004DC3A7 /* YardBirdTests.xctest */,
 				B653F09F244337A0004DC3A7 /* YardBirdUITests.xctest */,
+				B6105F5924796B90005658B2 /* YardBirdRobot.framework */,
+				B6105F6124796B91005658B2 /* YardBirdRobotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -118,8 +210,6 @@
 				B653F08A244337A0004DC3A7 /* LaunchScreen.storyboard */,
 				B653F08D244337A0004DC3A7 /* Info.plist */,
 				B653F08E244337A0004DC3A7 /* main.m */,
-				B66C399624437846001A0897 /* PeripheralSelectTableViewController.h */,
-				B66C399724437846001A0897 /* PeripheralSelectTableViewController.m */,
 				B66C3999244472A0001A0897 /* PeripheralControlViewController.h */,
 				B66C399A244472A0001A0897 /* PeripheralControlViewController.m */,
 			);
@@ -146,7 +236,56 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		B6105F5424796B90005658B2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6105F6B24796B91005658B2 /* YardBirdRobot.h in Headers */,
+				B6105F7824796C53005658B2 /* Robot.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		B6105F5824796B90005658B2 /* YardBirdRobot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6105F7024796B91005658B2 /* Build configuration list for PBXNativeTarget "YardBirdRobot" */;
+			buildPhases = (
+				B6105F5424796B90005658B2 /* Headers */,
+				B6105F5524796B90005658B2 /* Sources */,
+				B6105F5624796B90005658B2 /* Frameworks */,
+				B6105F5724796B90005658B2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YardBirdRobot;
+			productName = YardBirdRobot;
+			productReference = B6105F5924796B90005658B2 /* YardBirdRobot.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B6105F6024796B91005658B2 /* YardBirdRobotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6105F7324796B91005658B2 /* Build configuration list for PBXNativeTarget "YardBirdRobotTests" */;
+			buildPhases = (
+				B6105F5D24796B91005658B2 /* Sources */,
+				B6105F5E24796B91005658B2 /* Frameworks */,
+				B6105F5F24796B91005658B2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B6105F6424796B91005658B2 /* PBXTargetDependency */,
+				B6105F6624796B91005658B2 /* PBXTargetDependency */,
+			);
+			name = YardBirdRobotTests;
+			productName = YardBirdRobotTests;
+			productReference = B6105F6124796B91005658B2 /* YardBirdRobotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B653F0752443379C004DC3A7 /* YardBird */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B653F0A8244337A0004DC3A7 /* Build configuration list for PBXNativeTarget "YardBird" */;
@@ -154,10 +293,12 @@
 				B653F0722443379C004DC3A7 /* Sources */,
 				B653F0732443379C004DC3A7 /* Frameworks */,
 				B653F0742443379C004DC3A7 /* Resources */,
+				B6105F2924796924005658B2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B6105F6D24796B91005658B2 /* PBXTargetDependency */,
 			);
 			name = YardBird;
 			productName = YardBird;
@@ -209,6 +350,14 @@
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Gabriel Giosia";
 				TargetAttributes = {
+					B6105F5824796B90005658B2 = {
+						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1140;
+					};
+					B6105F6024796B91005658B2 = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = B653F0752443379C004DC3A7;
+					};
 					B653F0752443379C004DC3A7 = {
 						CreatedOnToolsVersion = 11.4;
 					};
@@ -238,11 +387,27 @@
 				B653F0752443379C004DC3A7 /* YardBird */,
 				B653F093244337A0004DC3A7 /* YardBirdTests */,
 				B653F09E244337A0004DC3A7 /* YardBirdUITests */,
+				B6105F5824796B90005658B2 /* YardBirdRobot */,
+				B6105F6024796B91005658B2 /* YardBirdRobotTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B6105F5724796B90005658B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6105F5F24796B91005658B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B653F0742443379C004DC3A7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,13 +435,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B6105F5524796B90005658B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6105F7924796C53005658B2 /* Robot.m in Sources */,
+				B6105F7A247A1784005658B2 /* RobotManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6105F5D24796B91005658B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6105F6924796B91005658B2 /* YardBirdRobotTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B653F0722443379C004DC3A7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				B653F08F244337A0004DC3A7 /* main.m in Sources */,
 				B66C399B244472A0001A0897 /* PeripheralControlViewController.m in Sources */,
-				B66C399824437846001A0897 /* PeripheralSelectTableViewController.m in Sources */,
 				B653F07B2443379C004DC3A7 /* AppDelegate.m in Sources */,
 				B653F07E2443379C004DC3A7 /* SceneDelegate.m in Sources */,
 			);
@@ -301,6 +482,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B6105F6424796B91005658B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6105F5824796B90005658B2 /* YardBirdRobot */;
+			targetProxy = B6105F6324796B91005658B2 /* PBXContainerItemProxy */;
+		};
+		B6105F6624796B91005658B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B653F0752443379C004DC3A7 /* YardBird */;
+			targetProxy = B6105F6524796B91005658B2 /* PBXContainerItemProxy */;
+		};
+		B6105F6D24796B91005658B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6105F5824796B90005658B2 /* YardBirdRobot */;
+			targetProxy = B6105F6C24796B91005658B2 /* PBXContainerItemProxy */;
+		};
 		B653F096244337A0004DC3A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B653F0752443379C004DC3A7 /* YardBird */;
@@ -333,6 +529,103 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B6105F7124796B91005658B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = YardBirdRobot/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdRobot;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B6105F7224796B91005658B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = YardBirdRobot/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdRobot;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B6105F7424796B91005658B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBirdRobotTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdRobotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YardBirdy.app/YardBirdy";
+			};
+			name = Debug;
+		};
+		B6105F7524796B91005658B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 42CK8R32FM;
+				INFOPLIST_FILE = YardBirdRobotTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.giosia.yardbird.YardBirdRobotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YardBirdy.app/YardBirdy";
+			};
+			name = Release;
+		};
 		B653F0A6244337A0004DC3A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -560,6 +853,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B6105F7024796B91005658B2 /* Build configuration list for PBXNativeTarget "YardBirdRobot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6105F7124796B91005658B2 /* Debug */,
+				B6105F7224796B91005658B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6105F7324796B91005658B2 /* Build configuration list for PBXNativeTarget "YardBirdRobotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6105F7424796B91005658B2 /* Debug */,
+				B6105F7524796B91005658B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B653F0712443379C004DC3A7 /* Build configuration list for PBXProject "YardBird" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

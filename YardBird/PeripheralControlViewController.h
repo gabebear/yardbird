@@ -11,9 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PeripheralControlViewController : UIViewController <CBPeripheralDelegate, UITextFieldDelegate>
-
-@property (strong, nonatomic) CBPeripheral *peripheral;
+@interface PeripheralControlViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *consoleBottomConstraint;
@@ -57,8 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UISegmentedControl *speedSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *stepSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *pollingSegmentedControl;
-
-- (void)connectPeripheral:(CBPeripheral *)peripheral;
 
 @end
 
