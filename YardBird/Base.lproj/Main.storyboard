@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hYg-Zj-Nmx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hYg-Zj-Nmx">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -498,7 +498,7 @@
                         <viewLayoutGuide key="safeArea" id="kf5-Dq-FDs"/>
                     </view>
                     <navigationItem key="navigationItem" title="Connecting" id="xd1-ei-sb8">
-                        <barButtonItem key="leftBarButtonItem" title="Connect" image="antenna.radiowaves.left.and.right" catalog="system" id="OkZ-ge-r01">
+                        <barButtonItem key="leftBarButtonItem" title="Connect" image="arrow.uturn.down" catalog="system" id="OkZ-ge-r01">
                             <connections>
                                 <action selector="pickRobot:" destination="4aA-5A-M3o" id="FOe-A3-W2z"/>
                             </connections>
@@ -552,7 +552,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="antenna.radiowaves.left.and.right" catalog="system" width="128" height="109"/>
+        <image name="arrow.uturn.down" catalog="system" width="128" height="118"/>
         <image name="rectangle.expand.vertical" catalog="system" width="128" height="122"/>
     </resources>
 </document>

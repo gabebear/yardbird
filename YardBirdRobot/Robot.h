@@ -49,11 +49,9 @@ typedef struct {
 @class Robot;
 
 @protocol RobotDelegate<NSObject>
-
-- (void)robot:(Robot *)robot didSendStatus:(RobotStatus)status;
-- (void)robot:(Robot *)robot didSendMessage:(NSString *)message;
+- (void)robot:(Robot *)robot didUpdateStatus:(RobotStatus)status;
+- (void)robot:(Robot *)robot didReceiveMessage:(NSString *)message;
 - (void)robot:(Robot *)robot wasSentGcode:(Gcode)gcode;
-
 @end
 
 @interface Robot : NSObject
@@ -66,7 +64,9 @@ typedef struct {
                completion:(void (^ __nullable)(Robot *robot))completion;
 
 - (instancetype)init NS_UNAVAILABLE; // Use [presentPickerFrom:completion:] to get a Robot.
++ (id)new NS_UNAVAILABLE; 
 
+- (void)disconnect;
 - (void)sendGcode:(Gcode)gcode;
 - (void)sendEmergencyStop;
 

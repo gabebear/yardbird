@@ -5,19 +5,16 @@
 //  Created by Gabriel Giosia on 5/23/20.
 //  Copyright © 2020 Gabriel Giosia. All rights reserved.
 //
-#import <CoreBluetooth/CoreBluetooth.h>
 
 #import "Robot.h"
-#import "RobotManager.h"
+#import "ConnectionManager.h"
 
-NSString * const PERIPHERAL_CHARACTERISTIC_UUID = @"FFE1";
+@interface Robot ()<ConnectionDelegate>
 
-@interface Robot () <CBPeripheralDelegate>
-
-@property (strong, nonatomic, nullable) CBPeripheral *peripheral;
+@property (strong, nonatomic, nullable) NSObject<Connection> *connection;
 @property (weak, nonatomic) NSObject<RobotDelegate> *delegate;
 @property (strong, nonatomic) NSTimer *statusPollingTimer;
-@property (strong, nonatomic) NSString *peripheralTextBuffer;
+@property (strong, nonatomic) NSString *textBuffer;
 
 @end
 
@@ -26,32 +23,29 @@ NSString * const PERIPHERAL_CHARACTERISTIC_UUID = @"FFE1";
 + (void)presentPickerFrom:(UIViewController *)viewController
                  delegate:(NSObject<RobotDelegate> *)delegate
                completion:(void (^ __nullable)(Robot *robot))completion {
-  static NSHashTable<Robot *> *allCurrentRobots;
-  if (!allCurrentRobots) {
-    allCurrentRobots = [NSHashTable weakObjectsHashTable];
-  }
-  [RobotManager.sharedManager presentPickerFrom:viewController completion:^(CBPeripheral * _Nullable peripheral) {
-    for (Robot *oldRobot in allCurrentRobots) {
-      if([oldRobot.peripheral.identifier isEqual:peripheral.identifier]) {
-        completion(oldRobot);
-        return;
-      }
-    }
+  [ConnectionManager.sharedManager presentPickerFrom:viewController completion:^(NSObject<Connection> * _Nullable connection) {
     Robot *robot = nil;
-    if (peripheral) {
+    if (connection) {
       robot = [[Robot alloc] init];
       robot.delegate = delegate;
-      robot.peripheral = peripheral;
-      robot.peripheral.delegate = robot;
-      [robot.peripheral discoverServices:nil];
+      robot.connection = connection;
+      connection.delegate = robot;
+      [robot.connection start];
       robot.pollingEnabled = YES;
-      [allCurrentRobots addObject:robot];
     }
     completion(robot);
   }];
 }
 
+- (void)disconnect {
+  if (self.connection) {
+    [ConnectionManager.sharedManager disconnectConnection:self.connection];
+    self.connection = nil;
+  }
+}
+
 - (void)dealloc {
+  [ConnectionManager.sharedManager disconnectConnection:self.connection];
   [self.statusPollingTimer invalidate];
 }
 
@@ -74,16 +68,8 @@ NSString * const PERIPHERAL_CHARACTERISTIC_UUID = @"FFE1";
 }
 
 - (void)sendGcode:(Gcode)gcode {
-  for (CBService * service in self.peripheral.services) {
-    for (CBCharacteristic * characteristic in service.characteristics) {
-      if ([characteristic.UUID.UUIDString isEqual:PERIPHERAL_CHARACTERISTIC_UUID]) {
-        NSString *crLfStr = [NSString stringWithFormat:@"%@\r\n", gcode.command];
-        [self.peripheral writeValue:[crLfStr dataUsingEncoding:NSASCIIStringEncoding]
-                  forCharacteristic:characteristic
-                               type:CBCharacteristicWriteWithoutResponse];
-      }
-    }
-  }
+  NSString *crLfStr = [NSString stringWithFormat:@"%@\r\n", gcode.command];
+  [self.connection sendData:[crLfStr dataUsingEncoding:NSASCIIStringEncoding]];
   if (self.pollingShowChatter || ![gcode.command isEqualToString:@"?"]) {
     [self.delegate robot:self wasSentGcode:gcode];
   }
@@ -128,42 +114,16 @@ NSString * const PERIPHERAL_CHARACTERISTIC_UUID = @"FFE1";
   return (Gcode){[NSString stringWithFormat:@"M4E%.0lf", pwmValue]};
 }
 
-#pragma mark - CBPeripheralDelegate
+#pragma mark - ConnectionDelegate
 
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
-  for (CBService * service in peripheral.services) {
-    [peripheral discoverCharacteristics:nil forService:service];
-  }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
-  for (CBCharacteristic * character in [service characteristics]) {
-    [peripheral discoverDescriptorsForCharacteristic:character];
-  }
-}
-
-- (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-  const char *bytes = [(NSData*)[[characteristic UUID]data] bytes];
-  if (bytes && strlen(bytes) == 2 && bytes[0] == (char)0xFF && bytes[1] == (char)0xE1) {
-    for(CBService * service in [peripheral services]){
-      for (CBCharacteristic * characteristic in [service characteristics]){
-        [peripheral setNotifyValue:true forCharacteristic:characteristic];
-      }
-    }
-  }
-}
-
--(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
-  if (![characteristic.UUID.UUIDString isEqual:PERIPHERAL_CHARACTERISTIC_UUID]) {
-    return;
-  }
-  if (!self.peripheralTextBuffer) {
-    self.peripheralTextBuffer = @"";
+- (void)connection:(NSObject<Connection> *)connection didReceiveData:(NSData *)data {
+  if (!self.textBuffer) {
+    self.textBuffer = @"";
   }
   NSRegularExpression *statusRegexExpression = [NSRegularExpression regularExpressionWithPattern:@"^<([^,]+),Angle\\(ABCDXYZ\\):(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),Cartesian coordinate\\(XYZ RxRyRz\\):(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),(-?\\d+\\.\\d+),Pump PWM:(\\d+),Valve PWM:(\\d+),Motion_MODE:(\\d+)>$" options:NSRegularExpressionCaseInsensitive|NSRegularExpressionAnchorsMatchLines error:nil];
-  NSString *raw = [[[NSString alloc] initWithData:[characteristic value] encoding:NSASCIIStringEncoding] stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
-  self.peripheralTextBuffer = [self.peripheralTextBuffer stringByAppendingString:raw];
-  NSArray *lines = [self.peripheralTextBuffer componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+  NSString *raw = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+  self.textBuffer = [self.textBuffer stringByAppendingString:raw];
+  NSArray *lines = [self.textBuffer componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
   for (NSInteger i = 0; i < lines.count - 1; i++) {
     BOOL isLogChatter = NO;
     NSString *line = lines[i];
@@ -209,7 +169,7 @@ NSString * const PERIPHERAL_CHARACTERISTIC_UUID = @"FFE1";
         status.vacuumPWM = [[line substringWithRange:[match rangeAtIndex:15]] doubleValue];
         status.gripperPWM = [[line substringWithRange:[match rangeAtIndex:16]] doubleValue];
         status.isCartesianMode = [[line substringWithRange:[match rangeAtIndex:17]] boolValue];
-        [self.delegate robot:self didSendStatus:status];
+        [self.delegate robot:self didUpdateStatus:status];
       }
       if (line.length == 0) {
         isLogChatter = YES;
@@ -217,10 +177,10 @@ NSString * const PERIPHERAL_CHARACTERISTIC_UUID = @"FFE1";
       line = [@"\n" stringByAppendingString:line];
     }
     if (self.pollingShowChatter || !isLogChatter) {
-      [self.delegate robot:self didSendMessage:line];
+      [self.delegate robot:self didReceiveMessage:line];
     }
   }
-  self.peripheralTextBuffer = lines.lastObject;
+  self.textBuffer = lines.lastObject;
 }
 
 #pragma mark - end

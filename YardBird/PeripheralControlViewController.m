@@ -113,6 +113,7 @@
     self.loadingView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     [self.view addSubview:self.loadingView];
   }
+  [self.robot disconnect];
   [Robot presentPickerFrom:self delegate:self completion:^(Robot * _Nonnull robot) {
     if (robot) {
       self.robot = robot;
@@ -316,7 +317,7 @@
 
 #pragma mark - RobotDelegate
 
-- (void)robot:(Robot *)robot didSendStatus:(RobotStatus)status {
+- (void)robot:(Robot *)robot didUpdateStatus:(RobotStatus)status {
   switch (status.state) {
     case RobotStateIdle:
       self.navigationItem.title = @"Status: Idle";
@@ -380,7 +381,7 @@
   self.previousRobotStatus = status;
 }
 
-- (void)robot:(Robot *)robot didSendMessage:(NSString *)message {
+- (void)robot:(Robot *)robot didReceiveMessage:(NSString *)message {
   [self sendToConsole:message color:[UIColor linkColor]];
 }
 
