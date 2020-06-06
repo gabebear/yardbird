@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef enum : NSUInteger {
   RobotStateUnknown = 0,
+  RobotStateDisconnected,
   RobotStateIdle,
   RobotStateRun,
   RobotStateHold,

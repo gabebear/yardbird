@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ConnectionDelegate<NSObject>
 - (void)connection:(NSObject<Connection> *)connection didReceiveData:(NSData *)data;
+- (void)connection:(NSObject<Connection> *)connection didDisconnectWithError:(nullable NSError *)error;
 @end
 
 @interface ConnectionManager : NSObject

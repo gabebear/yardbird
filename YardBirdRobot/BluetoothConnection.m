@@ -32,6 +32,10 @@ NSString * const CHARACTERISTIC_UUID = @"FFE1";
   return [self.peripheral.identifier UUIDString];
 }
 
+- (void)disconnectWithError:(nullable NSError *)error {
+  [self.delegate connection:self didDisconnectWithError:error];
+}
+
 #pragma mark - CBPeripheralDelegate
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {

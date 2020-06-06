@@ -352,6 +352,9 @@
     case RobotStateUnknown:
       self.navigationItem.title = @"Status: Unknown";
       break;
+    case RobotStateDisconnected:
+      self.navigationItem.title = @"Disconnected";
+      break;
   }
   if (status.state == RobotStateIdle || status.isCartesianMode) {
     for (NSInteger i = 0; i < 6; i++) {

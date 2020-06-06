@@ -183,6 +183,12 @@
   self.textBuffer = lines.lastObject;
 }
 
+- (void)connection:(NSObject<Connection> *)connection didDisconnectWithError:(nullable NSError *)error {
+  RobotStatus status;
+  status.state = RobotStateDisconnected;
+  [self.delegate robot:self didUpdateStatus:status];
+}
+
 #pragma mark - end
 
 @end

@@ -160,6 +160,13 @@ static void SerialDeviceAdded(void *refCon, io_iterator_t serialPortIterator) {
   [self connectPeripheral:peripheral];
 }
 
+-(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
+  if ([peripheral.delegate isKindOfClass:[BluetoothConnection class]]) {
+    BluetoothConnection *connection = (BluetoothConnection *)peripheral.delegate;
+    [connection disconnectWithError:error];
+  }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

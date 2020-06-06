@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic, nullable) CBPeripheral *peripheral;
 @property (weak, nonatomic) NSObject<ConnectionDelegate> *delegate;
 
+- (void)disconnectWithError:(nullable NSError *)error;
+
 @end
 
 NS_ASSUME_NONNULL_END
