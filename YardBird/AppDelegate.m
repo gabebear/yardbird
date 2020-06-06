@@ -37,5 +37,17 @@
   // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
 }
 
+- (void)buildMenuWithBuilder:(id<UIMenuBuilder>)builder {
+  [super buildMenuWithBuilder:builder];
+  [builder removeMenuForIdentifier:UIMenuServices];
+  [builder removeMenuForIdentifier:UIMenuFormat];
+  [builder removeMenuForIdentifier:UIMenuToolbar];
+  UIAction *helpAction = [UIAction actionWithTitle:@"Yardbirdy Help" image:nil identifier:@"simpleHelp" handler:^(__kindof UIAction *action) {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/gabebear/yardbird"]
+                                       options:@{}
+                             completionHandler:nil];;
+  }];
+  [builder replaceMenuForIdentifier:UIMenuHelp withMenu:[UIMenu menuWithTitle:@"Help " children:@[helpAction]]];
+}
 
 @end
