@@ -34,14 +34,6 @@
 @property (weak, nonatomic) SCNNode *j5Node;
 @property (weak, nonatomic) SCNNode *j6Node;
 
-@property (assign, nonatomic) SCNVector4 j1NodeInitialRotation;
-@property (assign, nonatomic) SCNVector4 j2NodeInitialRotation;
-@property (assign, nonatomic) SCNVector4 j3NodeInitialRotation;
-@property (assign, nonatomic) SCNVector4 j4NodeInitialRotation;
-@property (assign, nonatomic) SCNVector4 j5NodeInitialRotation;
-@property (assign, nonatomic) SCNVector4 j6NodeInitialRotation;
-
-
 @end
 
 @implementation PeripheralControlViewController
@@ -96,12 +88,6 @@
   self.j4Node = [self.sceneView.scene.rootNode childNodeWithName:@"J4" recursively:YES];
   self.j5Node = [self.sceneView.scene.rootNode childNodeWithName:@"J5" recursively:YES];
   self.j6Node = [self.sceneView.scene.rootNode childNodeWithName:@"J6" recursively:YES];
-  self.j1NodeInitialRotation = self.j1Node.rotation;
-  self.j2NodeInitialRotation = self.j2Node.rotation;
-  self.j3NodeInitialRotation = self.j3Node.rotation;
-  self.j4NodeInitialRotation = self.j4Node.rotation;
-  self.j5NodeInitialRotation = self.j5Node.rotation;
-  self.j6NodeInitialRotation = self.j6Node.rotation;
 
   for (UIStepper *stepper in self.jointSteppers) {
     [stepper addTarget:self action:@selector(jointSteppersChanged) forControlEvents:UIControlEventValueChanged];
