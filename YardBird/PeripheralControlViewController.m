@@ -9,6 +9,8 @@
 #import "PeripheralControlViewController.h"
 #import <YardBirdRobot/Robot.h>
 
+#define DegToRadians(degrees)((M_PI * degrees)/180)
+
 @interface PeripheralControlViewController ( )<RobotDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) Robot *robot;
@@ -22,6 +24,22 @@
 @property (strong, nonatomic) NSArray<UILabel*> *axisLabels;
 @property (strong, nonatomic) NSArray<UIProgressView*> *jointProgressViews;
 @property (assign, nonatomic) RobotStatus previousRobotStatus;
+
+@property (weak, nonatomic) SCNNode *suctionNode;
+@property (weak, nonatomic) SCNNode *gripperNode;
+@property (weak, nonatomic) SCNNode *j1Node;
+@property (weak, nonatomic) SCNNode *j2Node;
+@property (weak, nonatomic) SCNNode *j3Node;
+@property (weak, nonatomic) SCNNode *j4Node;
+@property (weak, nonatomic) SCNNode *j5Node;
+@property (weak, nonatomic) SCNNode *j6Node;
+
+@property (assign, nonatomic) SCNVector4 j1NodeInitialRotation;
+@property (assign, nonatomic) SCNVector4 j2NodeInitialRotation;
+@property (assign, nonatomic) SCNVector4 j3NodeInitialRotation;
+@property (assign, nonatomic) SCNVector4 j4NodeInitialRotation;
+@property (assign, nonatomic) SCNVector4 j5NodeInitialRotation;
+@property (assign, nonatomic) SCNVector4 j6NodeInitialRotation;
 
 
 @end
@@ -70,6 +88,20 @@
     self.joint5ProgressView,
     self.joint6ProgressView,
   ];
+  self.suctionNode = [self.sceneView.scene.rootNode childNodeWithName:@"SuctionCup" recursively:YES];
+  self.gripperNode = [self.sceneView.scene.rootNode childNodeWithName:@"Gripper" recursively:YES];
+  self.j1Node = [self.sceneView.scene.rootNode childNodeWithName:@"J1" recursively:YES];
+  self.j2Node = [self.sceneView.scene.rootNode childNodeWithName:@"J2" recursively:YES];
+  self.j3Node = [self.sceneView.scene.rootNode childNodeWithName:@"J3" recursively:YES];
+  self.j4Node = [self.sceneView.scene.rootNode childNodeWithName:@"J4" recursively:YES];
+  self.j5Node = [self.sceneView.scene.rootNode childNodeWithName:@"J5" recursively:YES];
+  self.j6Node = [self.sceneView.scene.rootNode childNodeWithName:@"J6" recursively:YES];
+  self.j1NodeInitialRotation = self.j1Node.rotation;
+  self.j2NodeInitialRotation = self.j2Node.rotation;
+  self.j3NodeInitialRotation = self.j3Node.rotation;
+  self.j4NodeInitialRotation = self.j4Node.rotation;
+  self.j5NodeInitialRotation = self.j5Node.rotation;
+  self.j6NodeInitialRotation = self.j6Node.rotation;
 
   for (UIStepper *stepper in self.jointSteppers) {
     [stepper addTarget:self action:@selector(jointSteppersChanged) forControlEvents:UIControlEventValueChanged];
@@ -84,6 +116,8 @@
   [self.vacuumSegmentedControl addTarget:self action:@selector(vacuumSegmentChange) forControlEvents:UIControlEventValueChanged];
   [self.gripperSegmentedControl addTarget:self action:@selector(gripperSegmentChange) forControlEvents:UIControlEventValueChanged];
   [self.pollingSegmentedControl addTarget:self action:@selector(updatePolling) forControlEvents:UIControlEventValueChanged];
+  [self.topBottom3dSegmentedControl addTarget:self action:@selector(topBottom3dSegmentChange) forControlEvents:UIControlEventValueChanged];
+  [self.endEffector3dSegmentedControl addTarget:self action:@selector(endEffector3dSegmentChange) forControlEvents:UIControlEventValueChanged];
 
   [self selectRobot];
 }
@@ -166,7 +200,9 @@
     case 1: speed = 500; break;
     default: speed = 200; break;
   }
-  [self.robot sendGcode:[Robot gcodeForJointCoordinate:[self coordinateFromJointSteppers] speed:speed]];
+  RobotJointCoordinate joints = [self coordinateFromJointSteppers];
+  [self.robot sendGcode:[Robot gcodeForJointCoordinate:joints speed:speed]];
+  [self update3dForJoints:joints duration:0];
   for (UIStepper *stepper in self.axisSteppers) {
     stepper.enabled = NO;
   }
@@ -272,6 +308,33 @@
   status.gripperPWM = pwmValue;
   self.previousRobotStatus = status;
   [self.robot sendGcode:[Robot gcodeForGripperPWM:pwmValue]];
+}
+
+- (void)topBottom3dSegmentChange {
+  if (self.topBottom3dSegmentedControl.selectedSegmentIndex == 0) {
+    [self.sceneView.superview bringSubviewToFront:self.sceneView];
+  } else {
+    [self.sceneView.superview sendSubviewToBack:self.sceneView];
+  }
+}
+
+- (void)endEffector3dSegmentChange {
+  if (self.endEffector3dSegmentedControl.selectedSegmentIndex == 0) {
+    self.suctionNode.hidden = NO;
+    self.gripperNode.hidden = YES;
+  } else {
+    self.suctionNode.hidden = YES;
+    self.gripperNode.hidden = NO;
+  }
+}
+
+- (void)update3dForJoints:(RobotJointCoordinate)joints duration:(NSTimeInterval)duration{
+  [self.j1Node runAction:[SCNAction rotateToX:0 y:0 z:DegToRadians(joints.j1) duration:duration]];
+  [self.j2Node runAction:[SCNAction rotateToX:0 y:DegToRadians(joints.j2) z:0 duration:duration]];
+  [self.j3Node runAction:[SCNAction rotateToX:0 y:0 z:DegToRadians(joints.j3) duration:duration]];
+  [self.j4Node runAction:[SCNAction rotateToX:-DegToRadians(joints.j4) y:0 z:0 duration:duration]];
+  [self.j5Node runAction:[SCNAction rotateToX:-DegToRadians(joints.j5) y:0 z:0 duration:duration]];
+  [self.j6Node runAction:[SCNAction rotateToX:0 y:DegToRadians(joints.j6) z:0 duration:duration]];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -381,6 +444,10 @@
     self.gripperSegmentedControl.selectedSegmentIndex = gripperSegmentIndex;
   }
 
+  if ((status.state == RobotStateIdle && self.previousRobotStatus.state == RobotStateIdle) || self.axis1Stepper.enabled) {
+    [self update3dForJoints:status.joints duration:0.1];
+  }
+  
   self.previousRobotStatus = status;
 }
 

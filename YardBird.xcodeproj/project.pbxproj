@@ -15,6 +15,7 @@
 		B6105F7824796C53005658B2 /* Robot.h in Headers */ = {isa = PBXBuildFile; fileRef = B6105F7624796C53005658B2 /* Robot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6105F7924796C53005658B2 /* Robot.m in Sources */ = {isa = PBXBuildFile; fileRef = B6105F7724796C53005658B2 /* Robot.m */; };
 		B6105F7A247A1784005658B2 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B66C399724437846001A0897 /* ConnectionManager.m */; };
+		B62DDA8C248AA84400395503 /* Assets.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = B62DDA8B248AA84400395503 /* Assets.scnassets */; };
 		B646D9F9248202A7009CDD89 /* BluetoothConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = B646D9F7248202A7009CDD89 /* BluetoothConnection.h */; };
 		B646D9FA248202A7009CDD89 /* BluetoothConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B646D9F8248202A7009CDD89 /* BluetoothConnection.m */; };
 		B646D9FD2482946B009CDD89 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B646D9FC2482946B009CDD89 /* IOKit.framework */; };
@@ -29,6 +30,7 @@
 		B653F099244337A0004DC3A7 /* YardBirdTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F098244337A0004DC3A7 /* YardBirdTests.m */; };
 		B653F0A4244337A0004DC3A7 /* YardBirdUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B653F0A3244337A0004DC3A7 /* YardBirdUITests.m */; };
 		B66C399B244472A0001A0897 /* PeripheralControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B66C399A244472A0001A0897 /* PeripheralControlViewController.m */; };
+		B6B4B3B9248B261C006AA5D7 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6B4B3B8248B261C006AA5D7 /* SceneKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,7 @@
 		B6105F6A24796B91005658B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6105F7624796C53005658B2 /* Robot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Robot.h; sourceTree = "<group>"; };
 		B6105F7724796C53005658B2 /* Robot.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Robot.m; sourceTree = "<group>"; };
+		B62DDA8B248AA84400395503 /* Assets.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Assets.scnassets; sourceTree = "<group>"; };
 		B646D9F7248202A7009CDD89 /* BluetoothConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BluetoothConnection.h; sourceTree = "<group>"; };
 		B646D9F8248202A7009CDD89 /* BluetoothConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BluetoothConnection.m; sourceTree = "<group>"; };
 		B646D9FC2482946B009CDD89 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -118,6 +121,7 @@
 		B66C399724437846001A0897 /* ConnectionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectionManager.m; sourceTree = "<group>"; };
 		B66C3999244472A0001A0897 /* PeripheralControlViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralControlViewController.h; sourceTree = "<group>"; };
 		B66C399A244472A0001A0897 /* PeripheralControlViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralControlViewController.m; sourceTree = "<group>"; };
+		B6B4B3B8248B261C006AA5D7 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/SceneKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6B4B3B9248B261C006AA5D7 /* SceneKit.framework in Frameworks */,
 				B6105F6E24796B91005658B2 /* YardBirdRobot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,6 +196,7 @@
 		B646D9FB2482946B009CDD89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6B4B3B8248B261C006AA5D7 /* SceneKit.framework */,
 				B646D9FC2482946B009CDD89 /* IOKit.framework */,
 			);
 			name = Frameworks;
@@ -231,6 +237,7 @@
 				B653F07D2443379C004DC3A7 /* SceneDelegate.m */,
 				B653F0852443379C004DC3A7 /* Main.storyboard */,
 				B653F088244337A0004DC3A7 /* Assets.xcassets */,
+				B62DDA8B248AA84400395503 /* Assets.scnassets */,
 				B653F08A244337A0004DC3A7 /* LaunchScreen.storyboard */,
 				B653F08D244337A0004DC3A7 /* Info.plist */,
 				B653F08E244337A0004DC3A7 /* main.m */,
@@ -438,6 +445,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B62DDA8C248AA84400395503 /* Assets.scnassets in Resources */,
 				B653F08C244337A0004DC3A7 /* LaunchScreen.storyboard in Resources */,
 				B653F089244337A0004DC3A7 /* Assets.xcassets in Resources */,
 				B653F0872443379C004DC3A7 /* Main.storyboard in Resources */,

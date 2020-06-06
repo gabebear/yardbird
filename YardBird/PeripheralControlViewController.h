@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import <SceneKit/SceneKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -55,6 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UISegmentedControl *speedSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *stepSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *pollingSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *topBottom3dSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *endEffector3dSegmentedControl;
+
+@property (weak, nonatomic) IBOutlet SCNView *sceneView;
 
 @end
 
