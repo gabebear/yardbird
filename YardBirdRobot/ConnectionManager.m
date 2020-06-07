@@ -110,7 +110,9 @@ NSString * const USB_DRIVER_CLASS_NAME = @"AppleUSBCHCOM"; //Apple's generic CH3
   if (!peripheral.delegate) {
     peripheral.delegate = connection;
   }
-  self.callback(connection);
+  if (self.callback) {
+    self.callback(connection);
+  }
   self.callback = nil;
   [self.pickerVC dismissViewControllerAnimated:YES completion:nil];
   self.pickerVC = nil;
@@ -183,7 +185,9 @@ static void SerialDeviceAdded(void *refCon, io_iterator_t serialPortIterator) {
     else {
       USBConnection *connection = [USBConnection new];
       connection.path = device.path;
-      self.callback(connection);
+      if (self.callback) {
+        self.callback(connection);
+      }
       self.callback = nil;
       [self.pickerVC dismissViewControllerAnimated:YES completion:nil];
       self.pickerVC = nil;
@@ -232,7 +236,9 @@ static void SerialDeviceAdded(void *refCon, io_iterator_t serialPortIterator) {
 #pragma mark - UIAdaptivePresentationControllerDelegate
 
 -(void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
-  self.callback(nil);
+  if (self.callback) {
+    self.callback(nil);
+  }
   self.callback = nil;
   self.pickerVC = nil;
 }
